@@ -1,9 +1,9 @@
 import time
+import board
+import adafruit_dht
 import jsonFuncs
 
-import random
-
-print("This is the testing version, values will be randomly generated")
+dhtDevice = adafruit_dht.DHT22(board.D4)
 
 def readData():
 	success = False
@@ -11,8 +11,8 @@ def readData():
 		try:
 			data = {
 				"time": time.time(),
-				"temperature": random.random()*32 + 10,
-				"humidity": random.random()*100
+				"temperature": dhtDevice.temperature,
+				"humidity": dhtDevice.humidity
 			}
 			success = True
 		except:
