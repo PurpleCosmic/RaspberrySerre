@@ -5,6 +5,7 @@ import dhtF
 import time
 import datetime
 import threading
+import lightSwitchF
 
 ##------------
 #Constants (Deze mogen veranderd worden)
@@ -76,6 +77,10 @@ def timeLoopFunc():
 		updateTimeLabels()
 		time.sleep(60)
 
+def toggleLight():
+	lightSwitchF.toggleLight()
+	lightButton.config(text = "Light:\n"+lightSwitchF.formatLightStatus())
+
 dhtRunning = True
 dhtThread = threading.Thread(target=dhtLoopFunc)
 dhtThread.start()
@@ -89,6 +94,9 @@ def exitFunction():
 
 ##-------
 #Buttons
+
+lightButton = Button(frame, text = "Light:\n"+lightSwitchF.formatLightStatus(), command = toggleLight)
+lightButton.pack(side = TOP, padx = 100)
 
 updateButton = Button(frame, text = "Update", command = updateDHTLabels)
 updateButton.pack(side=BOTTOM)
