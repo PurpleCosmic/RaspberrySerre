@@ -6,14 +6,18 @@ import time
 import datetime
 import threading
 
-tk = Tk()
-
 ##------------
 #Constants (Deze mogen veranderd worden)
 UPDATE_COOLDOWN = 10.0
 
 #Script Variables
-Active = True
+
+##-------------
+#Tk setup
+
+tk = Tk()
+tk.attributes('-fullscreen', True)
+tk.title('Dashboard Serre')
 
 ##-------------
 #Labels
@@ -21,11 +25,11 @@ Active = True
 frame = Frame(tk, borderwidth=2)
 frame.pack(fill=BOTH, expand=1)
 
-tempLabel = Label(frame, text="")
-tempLabel.pack(fill=X, expand = 1, side = LEFT)
+tempValLabel = Label(frame, text="")
+tempValLabel.pack(fill=X, expand = 1, side = LEFT)
 
-humidityLabel = Label(frame, text = "")
-humidityLabel.pack(fill=X, expand=1, side = RIGHT)
+humidityValLabel = Label(frame, text = "")
+humidityValLabel.pack(fill=X, expand=1, side = RIGHT)
 
 dateLabel = Label(frame, text = "")
 timeLabel = Label(frame, text = "")
@@ -38,19 +42,21 @@ timeLabel.pack(side=TOP)
 def updateDHTLabels():
 	print("Updating DHT values")
 	data = dhtF.readData()
-	tempLabel.config(text = dhtF.formatTemperature(data["temperature"]))
-	humidityLabel.config(text = dhtF.formatHumidity(data["humidity"]))
+	tempValLabel.config(text = dhtF.formatTemperature(data["temperature"]))
+	humidityValLabel.config(text = dhtF.formatHumidity(data["humidity"]))
 
 def updateTimeLabels():
 	print("Updating Time labels")
 	currentTime = datetime.datetime.now()
 	dateLabel.config(text=str(currentTime.day) + " " + str(currentTime.strftime("%b")) + " " + str(currentTime.year))
+	timeText = str(currentTime.hour) + ":" + str(currentTime.minute)
+	if currentTime.minute < 10:
+		timeText = timeText[:len(timeText)-1] + "0" + timeText[1:]
 	timeLabel.config(text=str(currentTime.hour) + ":" + str(currentTime.minute))
 
 def dhtLoopFunc():
-	time.sleep(3)
-	while Active:
-		print(Active)
+	time.sleep(3) #Give DHT time to start up
+	while True: #Idem timeLoop
 		try:
 			updateDHTLabels()
 			time.sleep(UPDATE_COOLDOWN)
@@ -58,18 +64,19 @@ def dhtLoopFunc():
 			print("Failed To Update!\nRetrying")
 
 def timeLoopFunc():
-	while Active:
+	while True: # I still need to find a way to kill this thread cuz it's not working
 		updateTimeLabels()
 		time.sleep(60)
 
+dhtRunning = True
 dhtThread = threading.Thread(target=dhtLoopFunc)
 dhtThread.start()
 
+dateRunning = True
 timeThread = threading.Thread(target=timeLoopFunc)
 timeThread.start()
 
 def exitFunction():
-	Active = False
 	tk.destroy()
 
 ##-------
