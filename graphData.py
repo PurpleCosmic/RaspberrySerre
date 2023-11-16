@@ -3,38 +3,23 @@ import jsonFuncs
 
 plt.grid(True)
 
+def plotTimedData(file, dataKey, dataLabel, color)
+	data = jsonFuncs.readFile(file)
+
+        xAxis = [key["time"] for key in data]
+        yAxis = [key[dataKey] for key in data]
+
+        plt.plot(xAxis, yAxis, color = color, marker = 'o')
+        plt.xlabel('time')
+        plt.ylabel(dataLabel)
+
+        plt.show()
+
 def plotLight():
-	data = jsonFuncs.readFile("lightLevels.JSON")
-
-	xAxis = [key["time"] for key in data]
-	yAxis = [key["lightLevel"] for key in data]
-
-	plt.plot(xAxis, yAxis, color = 'y', marker = 'o')
-	plt.xlabel('time')
-	plt.ylabel('Light Level')
-
-	plt.show()
+	plotTimedData("lightLevels.JSON", "lightLevel", "Light Level", 'y')
 
 def plotHumidity():
-	data = jsonFuncs.readFile("dht_data.JSON")
+	plotTimedData("dht_data.JSON", "humidity", "Humidity", 'b')
 
-	xAxis = [key["time"] for key in data]
-	yAxis = [key["humidity"] for key in data]
-
-	plt.plot(xAxis, yAxis, color = 'b', marker = 'o')
-	plt.xlabel('time')
-	plt.ylabel('Humidity')
-
-	plt.show()
-	
 def plotTemperature():
-	data = jsonFuncs.readFile("dht_data.JSON")
-
-	xAxis = [key["time"] for key in data]
-	yAxis = [key["temperature"] for key in data]
-
-	plt.plot(xAxis, yAxis, color = 'r', marker = 'o')
-	plt.xlabel('time')
-	plt.ylabel('Temperature')
-
-	plt.show()	
+	plotTimedData("dht_data.JSON", "temperature", "Temperature", 'r')
