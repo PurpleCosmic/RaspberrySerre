@@ -6,14 +6,14 @@ plt.grid(True)
 def plotTimedData(file, dataKey, dataLabel, color):
 	data = jsonFuncs.readFile(file)
 
-        xAxis = [key["time"] for key in data]
-        yAxis = [key[dataKey] for key in data]
+	xAxis = [key["time"] for key in data]
+	yAxis = [key[dataKey] for key in data]
 
-        plt.plot(xAxis, yAxis, color = color, marker = 'o')
-        plt.xlabel('time')
-        plt.ylabel(dataLabel)
+	plt.plot(xAxis, yAxis, color = color, marker = 'o')
+	plt.xlabel('time')
+	plt.ylabel(dataLabel)
 
-        plt.show()
+	plt.show()
 
 def plotLight():
 	plotTimedData("lightLevels.JSON", "lightLevel", "Light Level", 'y')
