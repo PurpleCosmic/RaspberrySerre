@@ -1,7 +1,7 @@
 ##------------------
 #Imports
 from tkinter import *
-import dhtFT
+import dhtF
 import time
 import datetime
 import threading
