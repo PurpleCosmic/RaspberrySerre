@@ -65,31 +65,37 @@ def updateTimeLabels():
 
 def dhtLoopFunc():
 	time.sleep(3) #Give DHT time to start up
-	while True: #Idem timeLoop
+	global running
+	while running:
 		try:
 			updateDHTLabels()
 			time.sleep(UPDATE_COOLDOWN)
 		except:
 			print("Failed To Update!\nRetrying")
+	return
 
 def timeLoopFunc():
-	while True: # I still need to find a way to kill this thread cuz it's not working
+	global running
+	while running:
 		updateTimeLabels()
 		time.sleep(60)
+	return
 
 def toggleLight():
 	lightSwitchF.toggleLight()
 	lightButton.config(text = "Light:\n"+lightSwitchF.formatLightStatus())
 
-dhtRunning = True
+running = True
 dhtThread = threading.Thread(target=dhtLoopFunc)
 dhtThread.start()
 
-dateRunning = True
+running = True
 timeThread = threading.Thread(target=timeLoopFunc)
 timeThread.start()
 
 def exitFunction():
+	global running
+	running = False
 	tk.destroy()
 
 ##-------
