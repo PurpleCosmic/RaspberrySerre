@@ -3,7 +3,7 @@ import jsonFuncs
 
 plt.grid(True)
 
-def plotTimedData(file, dataKey, dataLabel, color)
+def plotTimedData(file, dataKey, dataLabel, color):
 	data = jsonFuncs.readFile(file)
 
         xAxis = [key["time"] for key in data]
