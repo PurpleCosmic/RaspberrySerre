@@ -25,16 +25,24 @@ tk.title('Dashboard Serre')
 frame = Frame(tk, borderwidth=2)
 frame.pack(fill=BOTH, expand=1)
 
-tempValLabel = Label(frame, text="")
+tempValLabel = Label(frame,
+	text = "Temperature:\n",
+	font = ("Helvetica",18),
+)
 tempValLabel.pack(fill=X, expand = 1, side = LEFT)
 
-humidityValLabel = Label(frame, text = "")
+humidityValLabel = Label(frame,
+	text = "Humidity:\n",
+	font = ("Helvetica", 18)
+)
 humidityValLabel.pack(fill=X, expand=1, side = RIGHT)
 
-dateLabel = Label(frame, text = "")
-timeLabel = Label(frame, text = "")
-dateLabel.pack(side=TOP)
-timeLabel.pack(side=TOP)
+dateLabel = Label(frame,
+	text = "",
+	font = ("Helvetica",24),
+	bd = 1,
+)
+dateLabel.pack(side=TOP, pady = 20)
 
 ##-----------
 #Functions
@@ -42,17 +50,17 @@ timeLabel.pack(side=TOP)
 def updateDHTLabels():
 	print("Updating DHT values")
 	data = dhtF.readData()
-	tempValLabel.config(text = dhtF.formatTemperature(data["temperature"]))
-	humidityValLabel.config(text = dhtF.formatHumidity(data["humidity"]))
+	tempValLabel.config(text = "Temperature:\n"+dhtF.formatTemperature(data["temperature"]))
+	humidityValLabel.config(text = "Humidity:\n"+dhtF.formatHumidity(data["humidity"]))
 
 def updateTimeLabels():
 	print("Updating Time labels")
 	currentTime = datetime.datetime.now()
-	dateLabel.config(text=str(currentTime.day) + " " + str(currentTime.strftime("%b")) + " " + str(currentTime.year))
+	dateText = str(currentTime.day) + " " + str(currentTime.strftime("%b")) + " " + str(currentTime.year)
 	timeText = str(currentTime.hour) + ":" + str(currentTime.minute)
 	if currentTime.minute < 10:
 		timeText = timeText[:len(timeText)-1] + "0" + timeText[1:]
-	timeLabel.config(text=str(currentTime.hour) + ":" + str(currentTime.minute))
+	dateLabel.config(text=dateText+"\n"+timeText)
 
 def dhtLoopFunc():
 	time.sleep(3) #Give DHT time to start up
