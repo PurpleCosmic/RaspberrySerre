@@ -28,19 +28,19 @@ frame.pack(fill=BOTH, expand=1)
 
 tempValLabel = Label(frame,
 	text = "Temperature:\n",
-	font = ("Helvetica",18),
+	font = ("Helvetica",24),
 )
 tempValLabel.pack(fill=X, expand = 1, side = LEFT)
 
 humidityValLabel = Label(frame,
 	text = "Humidity:\n",
-	font = ("Helvetica", 18)
+	font = ("Helvetica", 24)
 )
 humidityValLabel.pack(fill=X, expand=1, side = RIGHT)
 
 dateLabel = Label(frame,
 	text = "",
-	font = ("Helvetica",24),
+	font = ("Helvetica",32),
 	bd = 1,
 )
 dateLabel.pack(side=TOP, pady = 20)
@@ -101,13 +101,13 @@ def exitFunction():
 ##-------
 #Buttons
 
-lightButton = Button(frame, text = "Light:\n"+lightSwitchF.formatLightStatus(), command = toggleLight)
-lightButton.pack(side = TOP, padx = 100)
+lightButton = Button(frame, text = "Light:\n"+lightSwitchF.formatLightStatus(), font=("Helevetica", 32), command = toggleLight)
+lightButton.place(anchor = CENTER, relx = .5, rely = .5)
 
-updateButton = Button(frame, text = "Update", command = updateDHTLabels)
-updateButton.pack(side=BOTTOM)
+updateButton = Button(frame, text = "Update", font=("Helvetica", 32), command = updateDHTLabels)
+exitButton = Button(frame, text = "Exit", font=("Helvetica", 32), command=exitFunction)
 
-exitButton = Button(frame, text = "Exit", command=exitFunction)
-exitButton.pack(side=BOTTOM, before=updateButton)
+exitButton.pack(side = BOTTOM)
+updateButton.pack(side = BOTTOM)
 
 tk.mainloop()
