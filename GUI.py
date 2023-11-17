@@ -2,6 +2,7 @@
 #Imports
 from tkinter import *
 import dhtF
+import bhF
 import time
 import datetime
 import threading
@@ -51,6 +52,7 @@ dateLabel.pack(side=TOP, pady = 20)
 def updateDHTLabels():
 	print("Updating DHT values")
 	data = dhtF.readData()
+	light = bhF.readLight()
 	tempValLabel.config(text = "Temperature:\n"+dhtF.formatTemperature(data["temperature"]))
 	humidityValLabel.config(text = "Humidity:\n"+dhtF.formatHumidity(data["humidity"]))
 
@@ -63,7 +65,7 @@ def updateTimeLabels():
 		timeText = timeText[:len(timeText)-1] + "0" + timeText[1:]
 	dateLabel.config(text=dateText+"\n"+timeText)
 
-def dhtLoopFunc():
+def sensorLoopFunc():
 	time.sleep(3) #Give DHT time to start up
 	global running
 	while running:
@@ -76,9 +78,14 @@ def dhtLoopFunc():
 
 def timeLoopFunc():
 	global running
+	firstRead = True
 	while running:
 		updateTimeLabels()
-		time.sleep(60)
+		if firstRead:
+			while not(time.time()%60 == 0):
+				time.sleep(1)
+		else:
+			time.sleep(60)
 	return
 
 def toggleLight():
@@ -86,7 +93,7 @@ def toggleLight():
 	lightButton.config(text = "Light:\n"+lightSwitchF.formatLightStatus())
 
 running = True
-dhtThread = threading.Thread(target=dhtLoopFunc)
+dhtThread = threading.Thread(target=sensorLoopFunc)
 dhtThread.start()
 
 running = True
