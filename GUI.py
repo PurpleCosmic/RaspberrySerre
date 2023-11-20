@@ -107,10 +107,10 @@ def exitFunction():
 ##-------
 #Buttons
 
-plotHumidButton = Button(frame, text = "Show Graph:\nHumidity", font=("Helevetica", 32), command = graphData.plotHumidity)
+plotHumidButton = Button(frame, text = "Show Graph:\nHumidity", font=("Helevetica", 24), command = graphData.plotHumidity)
 plotHumidButton.pack(side=RIGHT)
 
-plotTempButton = Button(frame, text = "Show Graph:\nTemperature", font=("Helevetica", 32), command = graphData.plotTemperature)
+plotTempButton = Button(frame, text = "Show Graph:\nTemperature", font=("Helevetica", 24), command = graphData.plotTemperature)
 plotTempButton.pack(side=LEFT)
 
 plotLightButton = Button(frame, text = "Show Graph:\nLight Level", font=("Helevetica", 32), command = graphData.plotLight)
