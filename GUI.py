@@ -7,6 +7,7 @@ import time
 import datetime
 import threading
 import lightSwitchF
+import graphData
 
 ##------------
 #Constants (Deze mogen veranderd worden)
@@ -105,6 +106,15 @@ def exitFunction():
 
 ##-------
 #Buttons
+
+plotHumidButton = Button(frame, text = "Show Graph:\nHumidity", font=("Helevetica", 32), command = graphData.plotHumidity)
+plotHumidButton.pack(side=RIGHT)
+
+plotTempButton = Button(frame, text = "Show Graph:\nTemperature", font=("Helevetica", 32), command = graphData.plotTemperature)
+plotTempButton.pack(side=LEFT)
+
+plotLightButton = Button(frame, text = "Show Graph:\nLight Level", font=("Helevetica", 32), command = graphData.plotLight)
+plotLightButton.pack(side=TOP)
 
 lightButton = Button(frame, text = "Light:\n"+lightSwitchF.formatLightStatus(), font=("Helevetica", 32), command = toggleLight)
 lightButton.place(anchor = CENTER, relx = .5, rely = .5)
