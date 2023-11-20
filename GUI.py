@@ -52,7 +52,6 @@ dateLabel.pack(side=TOP, pady = 20)
 def updateDHTLabels():
 	print("Updating DHT values")
 	data = dhtF.readData()
-	light = bhF.readLight()
 	tempValLabel.config(text = "Temperature:\n"+dhtF.formatTemperature(data["temperature"]))
 	humidityValLabel.config(text = "Humidity:\n"+dhtF.formatHumidity(data["humidity"]))
 
@@ -60,9 +59,7 @@ def updateTimeLabels():
 	print("Updating Time labels")
 	currentTime = datetime.datetime.now()
 	dateText = str(currentTime.day) + " " + str(currentTime.strftime("%b")) + " " + str(currentTime.year)
-	timeText = str(currentTime.hour) + ":" + str(currentTime.minute)
-	if currentTime.minute < 10:
-		timeText = timeText[:len(timeText)-1] + "0" + timeText[1:]
+	timeText = "{:02d}:{:02d}".format(currentTime.hour, currentTime.minute)
 	dateLabel.config(text=dateText+"\n"+timeText)
 
 def sensorLoopFunc():
@@ -71,6 +68,7 @@ def sensorLoopFunc():
 	while running:
 		try:
 			updateDHTLabels()
+			light = bhF.readLight()
 			time.sleep(UPDATE_COOLDOWN)
 		except:
 			print("Failed To Update!\nRetrying")
