@@ -1,14 +1,22 @@
 import json
 from os import path
 
-def insertData(file, data):
+def checkFileName(filename):
+	if filename.find("data/") == -1:
+		filename = "data/" + filename
+	return filename
+
+def insertData(filename, data):
+	file = checkFileName(filename)
 	with open(file, "w") as writeFile:
 		json.dump(data,  writeFile)
 
 def createFile(filename):
-	insertData(filename, [])
+	file = checkFileName(filename)
+	insertData(file, [])
 
-def readFile(file):
+def readFile(filename):
+	file = checkFileName(filename)
 	if path.isfile(file) is False:
 		createFile(file)
 
@@ -17,7 +25,8 @@ def readFile(file):
 		data = json.load(readFile)
 	return data
 
-def storeData(file, data):
+def storeData(filename, data):
+	file = checkFileName(filename)
 	d = readFile(file)
 	d.append(data)
 
