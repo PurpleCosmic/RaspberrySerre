@@ -10,7 +10,7 @@ import lightSwitchF
 
 ##------------
 #Constants (Deze mogen veranderd worden)
-UPDATE_COOLDOWN = 10.0
+UPDATE_COOLDOWN = 5.0
 
 #Script Variables
 
